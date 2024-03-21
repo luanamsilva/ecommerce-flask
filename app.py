@@ -17,6 +17,16 @@ def add_product():
      db.session.commit()
      return jsonify({"message": "Produto cadastrado com sucesso!"})
    return jsonify({"message": "Dados inválidos."}),400
+
+@app.route('/api/products/delete/<int:product_id>', methods=['DELETE'])
+def delete_product(product_id):
+   product = Product.query.get(product_id)
+   if product:
+      db.session.delete(product)
+      db.session.commit()
+      return jsonify({"message": "Produto deletado com sucesso"})
+   return jsonify({"message":"Produto não encontrado!"}),404
+
 @app.route('/' , methods = ['GET'])
 def initial():
     return 'rota inicial'
